@@ -7,9 +7,15 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-// import { findByLabelText } from '@testing-library/react';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import SearchIcon from '@mui/icons-material/Search';
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+
+const drawerWidth = 240;
+const navItems = ['Productos', 'Ventas', 'Usuarios'];
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -26,22 +32,11 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   width: '100%',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     [theme.breakpoints.up('sm')]: {
@@ -58,18 +53,41 @@ const Nav = styled('div')(({ theme }) => ({
   margin: 'auto',
   width: '20%',
   justifyContent: 'center',
-  paddingRight: '30%'
-}))
+  paddingRight: '30%',
+}));
 
 const StyledLink = styled(Link)(({ theme }) => ({
   color: 'white',
   fontSize: '1.1em',
-  margin: ' 0 30px 0 30px', 
+  margin: '0 30px',
   fontWeight: '600',
-  textDecoration: 'none'
-}))
+  textDecoration: 'none',
+}));
 
 const Header = () => {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        Inventario
+      </Typography>
+      <List>
+        {navItems.map((item) => (
+          <ListItem key={item} disablePadding>
+            <ListItemButton>
+              <ListItemText primary={item} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -78,37 +96,43 @@ const Header = () => {
             size="large"
             edge="start"
             color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
+            aria-label="menu"
+            sx={{ mr: 2, display: { sm: 'none' } }}
+            onClick={handleDrawerToggle}
           >
-            {/* <MenuIcon /> */}
+            <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Inventario
           </Typography>
-          <Nav>
-            <StyledLink >Productos</StyledLink>
-            <StyledLink >Usuarios</StyledLink>
-            <StyledLink >Autenticacion</StyledLink>
-          </Nav>
+          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <Nav>
+              {navItems.map((item) => (
+                <StyledLink key={item} to={`/${item.toLowerCase()}`}>{item}</StyledLink>
+              ))}
+            </Nav>
+          </Box>
           <Search>
-            <SearchIconWrapper>
-              {/* <SearchIcon /> */}
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Buscar..."
-              inputProps={{ 'aria-label': 'search' }}
-            />
+            <StyledInputBase placeholder="Buscar..." inputProps={{ 'aria-label': 'search' }} />
           </Search>
         </Toolbar>
       </AppBar>
+      <nav>
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{ keepMounted: true }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </nav>
     </Box>
   );
-}
+};
 
 export default Header;
