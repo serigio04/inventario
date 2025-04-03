@@ -1,15 +1,17 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import AppRoutes from "../backend/Routes";
+import Home from "./pages/Home";
 
 
 const App = () => {
   return(
     <BrowserRouter >
       <Header />
-      <AppRoutes />
-      {/* <Footer /> */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/usuarios" element={<u/>} /> 
+      </Routes>
     </BrowserRouter>
   )
 };
