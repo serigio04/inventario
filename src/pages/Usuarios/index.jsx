@@ -9,8 +9,9 @@ const columns = [
     {field: 'id', headerName: 'ID', width: 70},
     {field: 'nombre', headerName: 'Nombre', width: 130},
     {field: 'apellido', headerName: 'Apellido', width: 130},
-    {field: 'email', headerName: 'Email',type: 'email', width: 130},
-    {field: 'rol', headerName: 'Rol', width: 130}
+    {field: 'email', headerName: 'Email', width: 220},
+    {field: 'rol', headerName: 'Rol', width: 130},
+    {field: 'acciones', headerName: 'Acciones', width:100}
 ];
 
 const UsuariosTable = () => {
@@ -25,12 +26,12 @@ const UsuariosTable = () => {
     }, []);
 
     return (
-        <div>
-            <Paper sx={{height: 400, width: "80%"}}>
+        <div style={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+            <Paper sx={{height: 400, width: "80%", padding: '1%'}}>
                 <DataGrid 
                     rows={rows} 
                     columns={columns} 
-                    pageSize={5}
+                    pageSizeOptions={[5, 10]}
                 />
             </Paper>
         </div>
