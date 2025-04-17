@@ -1,29 +1,27 @@
 import { useState, useEffect } from "react";
 import * as React from "react";
 import { DataGrid } from '@mui/x-data-grid';
-import { getUsuarios } from "../../services/userService";
 import { Paper } from "@mui/material";
-
+import { getProductos } from "../../services/productService";
 
 const columns = [
     {field: 'id', headerName: 'ID', width: 70},
-    {field: 'nombre', headerName: 'Nombre', width: 130},
-    {field: 'apellido', headerName: 'Apellido', width: 130},
-    {field: 'email', headerName: 'Email', width: 220},
-    {field: 'rol', headerName: 'Rol', width: 130},
-    {field: 'fecha', headerName: 'Fecha actualizacion', width: 200},
-    {field: 'acciones', headerName: 'Acciones', width:100}
+    {field: 'nombre', headerName: 'Nombre', minWidth: 300},
+    {field: 'cantidad', headerName: 'Cantidad', width: 100},
+    {field: 'descripcion', headerName: 'Descripcion', width: 400},
+    {field: 'updated_at', headerName: 'Fecha actualizacion', width: 200},
+    {field: 'acciones', headerName: 'Acciones', width: 100}, 
 ];
 
-const UsuariosTable = () => {
+const Productos = () => {
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
-        const fetchUsuarios = async () => {
-            const data = await getUsuarios();
+        const fetchProductos = async () => {
+            const data =  await getProductos();
             setRows(data);
         };
-        fetchUsuarios();
+        fetchProductos();
     }, []);
 
     return (
@@ -39,4 +37,4 @@ const UsuariosTable = () => {
     )
 }
 
-export default UsuariosTable;
+export default Productos;
