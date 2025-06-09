@@ -26,12 +26,15 @@ const UsuariosTable = () => {
         fetchUsuarios();
     }, []);
 
+    const paginationModel = { page: 0, pageSize: 10 };
+
     return (
-        <div style={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+        <div style={{display: 'flex', justifyContent: 'center', alignContent: 'center', marginTop: '3vh'}}>
             <Paper sx={{height: 400, width: "80%", padding: '1%'}}>
                 <DataGrid 
                     rows={rows} 
                     columns={columns} 
+                    initialState={{ pagination: { paginationModel } }}
                     pageSizeOptions={[5, 10]}
                 />
             </Paper>

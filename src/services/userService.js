@@ -9,3 +9,8 @@ export const getUsuarios = async () => {
         return [];
     }
 }
+
+export const crearUsuario = async (usuario) => {
+    const response = await api.post('http:localhost:3001/api/usuarios', usuario);
+    return response.data;
+};
