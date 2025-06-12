@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 const loginForm = {
-    maxWidth: "70%", 
+    maxWidth: "45%", 
     display: "flex", 
     justifyContent: "center", 
     alignContent: "center", 
