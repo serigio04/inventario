@@ -6,7 +6,7 @@ import { crearUsuario } from '../../services/userService';
 
 // Estilos
 const registrarFromStyles = {
-    maxWidth: "70%", 
+    maxWidth: "60%", 
     display: "flex", 
     justifyContent: "center", 
     alignContent: "center", 
@@ -43,9 +43,17 @@ const RegistrarForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await crearUsuario(usuario);
-        alert('Usuario creado exitosamente');
-        console.log("Usuario creado: ", usuario)
+        try{
+            await crearUsuario(usuario);
+            alert('Usuario creado exitosamente');
+            console.log("Usuario creado: ", usuario)
+        } catch (error) {
+            if(error.response?.data?.error){
+                alert("Error: " + error.response.data.error)
+            } else {
+                alert("Existe un usuario con el correo registrado. Intenta con otro")
+            }
+        }
     }
 
     return <>
