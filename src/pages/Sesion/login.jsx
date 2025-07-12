@@ -1,4 +1,7 @@
-import * as React from 'react';
+import {React, useState} from 'react';
+import { useNavigate } from "react-router-dom";
+import { Login } from '../../services/authService';
+
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -27,14 +30,65 @@ const buttonStyle = {
 }
 
 const LoginForm = () => {
+    const [email, setEmail] = useState("");
+    const [passwrd, setPasswrd] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setErrorMsg("");
+
+        try {
+            const data = await Login(email, passwrd);
+            console.log("Login exitoso", data);
+            navigate("/productos"); 
+        } catch (error) {
+            setErrorMsg("Correo o contraseña inválidos");
+            console.error("Error en login:", error);
+        }
+    };
     return <>
         <div style={loginForm}>
             <h2>Iniciar sesion</h2>
-            <Box component="form" sx={{display:"flex", flexDirection: "column"}} noValidate autoComplete="off">
-                <TextField id="form-email" label="Email" variant="outlined" style={inputStyle}/>
-                <TextField id="form-password" label="Contraseña" variant="outlined" style={inputStyle}  />
+            <Box 
+                component="form" 
+                sx={{display:"flex", flexDirection: "column"}} 
+                noValidate 
+                autoComplete="off"
+                onSubmit={handleSubmit}
+            >
+                <TextField 
+                    type='email'
+                    name='email'
+                    id="form-email" 
+                    label="Email" 
+                    variant="outlined" 
+                    style={inputStyle}
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <TextField 
+                    type='password'
+                    name='passwrd'
+                    id="form-password" 
+                    label="Contraseña" 
+                    variant="outlined" 
+                    style={inputStyle}
+                    required
+                    value={passwrd}
+                    onChange={(e) => setPasswrd(e.target.value)}
+                />
+                <Button
+                    type='submit' 
+                    variant="contained" 
+                    style={buttonStyle}
+                >
+                    Iniciar sesion
+                </Button>
             </Box>
-            <Button variant="contained" style={buttonStyle}>Iniciar sesion</Button>
+            {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
         </div>
     </>  
 }
