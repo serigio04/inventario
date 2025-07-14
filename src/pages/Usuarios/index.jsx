@@ -16,7 +16,20 @@ const columns = [
     {field: 'apellido', headerName: 'Apellido', width: 130},
     {field: 'email', headerName: 'Email', width: 220},
     {field: 'rol', headerName: 'Rol', width: 130},
-    {field: 'fecha', headerName: 'Fecha actualizacion', width: 200},
+    {
+        field: 'updated_at', 
+        headerName: 'Fecha actualizacion', 
+        width: 200,
+        valueFormatter: (params) => {
+            if (!params?.value) return 'fecha';
+            const date = new Date(params.value);
+            return date.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
+        }
+    },
     {field: 'acciones', headerName: 'Acciones', width:100}
 ];
 
