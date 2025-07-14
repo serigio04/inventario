@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { crearUsuario } from '../../services/userService';
+import { Link } from 'react-router-dom';
 
 // Estilos
 const registrarFromStyles = {
@@ -23,7 +24,7 @@ const inputStyle = {
 }
 
 const buttonStyle = {
-    margin: "2.3vh 0",
+    margin: "2.3vh 1.6vw 0 0",
     padding: "1.5%",
     maxWidth: "30%"
 }
@@ -97,12 +98,23 @@ const RegistrarForm = () => {
                     style={inputStyle} 
                     onChange={handleChange} 
                 />
-                <Button 
-                    variant="contained" 
-                    type='submit'
-                    style={buttonStyle}
-                >Registrar
-                </Button>
+                <div style={{display:"flex", flexDirection:"row"}}>
+                    <Button 
+                        variant="contained" 
+                        type='submit'
+                        style={buttonStyle}
+                    >
+                        Registrar
+                    </Button>
+                    <Button
+                        variant="outlined" 
+                        style={buttonStyle}
+                        component={Link}
+                        to="/usuarios"
+                    >
+                        Cancelar
+                    </Button>
+                </div>
             </Box>
         </div>
     </>  

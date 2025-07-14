@@ -1,9 +1,14 @@
-import { useState, useEffect } from "react";
-import * as React from "react";
+import { useState, useEffect, React } from "react";
 import { DataGrid } from '@mui/x-data-grid';
+import { Link } from "react-router-dom";
 import { getUsuarios } from "../../services/userService";
-import { Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 
+const buttonStyle = {
+    margin: "2.3vh 0",
+    padding: "1%",
+    maxWidth: "20%"
+}
 
 const columns = [
     {field: 'id', headerName: 'ID', width: 70},
@@ -31,6 +36,14 @@ const UsuariosTable = () => {
     return (
         <div style={{display: 'flex', justifyContent: 'center', alignContent: 'center', marginTop: '3vh'}}>
             <Paper sx={{height: 400, width: "80%", padding: '1%'}}>
+                <Button 
+                    variant="contained" 
+                    style={buttonStyle}
+                    component={Link}
+                    to="/registrar"
+                >
+                    Agregar usuario
+                </Button>
                 <DataGrid 
                     rows={rows} 
                     columns={columns} 
