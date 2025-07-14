@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { crearUsuario } from '../../services/userService';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Estilos
 const registrarFromStyles = {
@@ -30,6 +30,8 @@ const buttonStyle = {
 }
 
 const RegistrarForm = () => {
+    const navigate = useNavigate();
+
     const [usuario, setUsuario] = useState({
         nombre: '',
         apellido: '',
@@ -44,10 +46,17 @@ const RegistrarForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+            if(!usuario.nombre || !usuario.apellido || !usuario.email ||  !usuario.passwrd){
+                alert("Debe agregar contenido a todos los campos")
+                return;
+            }
         try{
             await crearUsuario(usuario);
             alert('Usuario creado exitosamente');
             console.log("Usuario creado: ", usuario)
+            navigate("/usuarios")
+            
         } catch (error) {
             if(error.response?.data?.error){
                 alert("Error: " + error.response.data.error)
@@ -72,6 +81,7 @@ const RegistrarForm = () => {
                     name='nombre' 
                     variant="outlined" 
                     style={inputStyle} 
+                    required
                     onChange={handleChange}
                 />
                 <TextField 
@@ -80,6 +90,7 @@ const RegistrarForm = () => {
                     name='apellido'
                     variant="outlined" 
                     style={inputStyle} 
+                    required
                     onChange={handleChange} 
                 />
                 <TextField 
@@ -88,6 +99,7 @@ const RegistrarForm = () => {
                     name='email' 
                     variant="outlined" 
                     style={inputStyle} 
+                    required
                     onChange={handleChange} 
                 />
                 <TextField 
@@ -96,6 +108,7 @@ const RegistrarForm = () => {
                     name='passwrd' 
                     variant="outlined" 
                     style={inputStyle} 
+                    required
                     onChange={handleChange} 
                 />
                 <div style={{display:"flex", flexDirection:"row"}}>
